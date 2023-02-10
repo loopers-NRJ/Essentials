@@ -1,0 +1,8 @@
+export interface User {
+  id?: string;
+  email: string;
+  name: string;
+  provider: string;
+  profile: string;
+  token?: string;
+}
