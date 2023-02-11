@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { User } from "./types";
+import { Session } from "next-auth";
 let client: PrismaClient;
 
 export default function getInstance() {
@@ -8,7 +9,7 @@ export default function getInstance() {
   return client;
 }
 
-export async function getUser(email: string) {
+export async function findUser(email: string) {
   return await getInstance().user.findUnique({
     where: {
       email,
