@@ -1,8 +1,7 @@
-import { Session } from "inspector";
 import { NextAuthOptions } from "next-auth";
-import { JWT } from "next-auth/jwt";
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
+import FacebookProvider from "next-auth/providers/facebook";
 import { createUser, findUser } from "../../../services/database";
 
 export const authOptions: NextAuthOptions = {
@@ -10,6 +9,10 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    }),
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_CLIENT_ID as string,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET as string,
     }),
   ],
   secret: process.env.JWT_SECRET,
@@ -23,7 +26,6 @@ export const authOptions: NextAuthOptions = {
           email: user.email,
           name: user.name,
           image: user.image,
-          provider: "google",
           orders: [],
         });
       }
@@ -34,7 +36,6 @@ export const authOptions: NextAuthOptions = {
         const user = await findUser(session.user?.email);
         session.user.orders = user?.orders;
         session.user.id = user?.id;
-        session.user.provider = user?.provider || "google";
       }
       return session;
     },

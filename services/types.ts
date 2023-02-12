@@ -6,7 +6,6 @@ export interface User {
   email: string;
   name: string;
   image: string;
-  provider: string;
   token?: string;
   orders?: string[];
 }
