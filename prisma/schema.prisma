@@ -10,10 +10,39 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Users {
   id     String   @id @default(auto()) @map("_id") @db.ObjectId
   name   String
   email  String   @unique
   image  String
-  orders String[]
+  orders Orders[]
+}
+
+model Orders {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  products  Json[] // {productId: String, varientId: Int, quantity: Int }
+  total     Float
+  createdAt DateTime @default(now())
+  status    String   @default("pending")
+  User      Users?   @relation(fields: [userId], references: [id])
+}
+
+model Products {
+  id          String            @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String
+  price       Float
+  variants    ProductVarients[]
+}
+
+model ProductVarients {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  images     String[]
+  price      Float
+  available  Int
+  color      String?
+  ingredient String?
+  Products   Products? @relation(fields: [productsId], references: [id])
+  productsId String?   @db.ObjectId
 }
