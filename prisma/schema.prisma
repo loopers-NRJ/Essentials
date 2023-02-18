@@ -11,38 +11,72 @@ datasource db {
 }
 
 model Users {
-  id     String   @id @default(auto()) @map("_id") @db.ObjectId
-  name   String
-  email  String   @unique
-  image  String
-  orders Orders[]
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String    @unique
+  image     String
+  provider  String
+  createdAt DateTime? @default(now())
+}
+
+model UserAddress {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String    @db.ObjectId
+  address   String
+  mobile    String
+  createdAt DateTime? @default(now())
 }
 
 model Orders {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String   @db.ObjectId
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String    @db.ObjectId
   products  Json[] // {productId: String, varientId: Int, quantity: Int }
   total     Float
-  createdAt DateTime @default(now())
-  status    String   @default("pending")
-  User      Users?   @relation(fields: [userId], references: [id])
+  status    String    @default("pending")
+  createdAt DateTime? @default(now())
 }
 
 model Products {
-  id          String            @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  description String
-  price       Float
-  variants    ProductVarients[]
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  description   String
+  category      String[]
+  price         Float
+  numberInStock Int
+  images        String[]
+  createdAt     DateTime? @default(now())
 }
 
 model ProductVarients {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  images     String[]
-  price      Float
-  available  Int
-  color      String?
-  ingredient String?
-  Products   Products? @relation(fields: [productsId], references: [id])
-  productsId String?   @db.ObjectId
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  productId     String    @db.ObjectId
+  images        String[]
+  price         Float
+  numberInStock Int
+  color         String?
+  ingredient    String?
+  createdAt     DateTime? @default(now())
+}
+
+model Discount {
+  id               String    @id @default(auto()) @map("_id") @db.ObjectId
+  name             String
+  description      String?
+  discount_percent Float
+  active           Boolean
+  created_at       DateTime? @default(now())
+}
+
+model Comments {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  productId String    @db.ObjectId
+  userId    String    @db.ObjectId
+  comment   String
+  createdAt DateTime? @default(now())
+}
+
+model Category {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  value     String
+  createdAt DateTime? @default(now())
 }
