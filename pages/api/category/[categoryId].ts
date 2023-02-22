@@ -31,9 +31,9 @@ handler.get(async (req, res) => {
 handler.put(async (req, res) => {
   const id = req.query.categoryId as string;
   const value = req.body.category as string;
-  if (!value || value === "")
-    return res.status(400).json({ message: "Category name is required" });
   const category = await updateCategory(id, value);
+  if (category instanceof Error)
+    return res.status(400).json({ message: category.message });
   return res.status(200).json(category);
 });
 

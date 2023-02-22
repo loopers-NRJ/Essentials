@@ -1,5 +1,5 @@
 import getInstance from "./prismaClient";
-
+import { categoryValidator } from "./validators";
 export async function getAllCategory() {
   return await getInstance().category.findMany({});
 }
@@ -12,6 +12,8 @@ export async function getCategoryById(id: string) {
 }
 
 export async function createCategory(value: string) {
+  const { error } = categoryValidator.validate({ value });
+  if (error) return new Error(error.message);
   return await getInstance().category.create({
     data: {
       value,
@@ -20,6 +22,8 @@ export async function createCategory(value: string) {
 }
 
 export async function updateCategory(id: string, value: string) {
+  const { error } = categoryValidator.validate({ value });
+  if (error) return new Error(error.message);
   return await getInstance().category.update({
     where: {
       id,
