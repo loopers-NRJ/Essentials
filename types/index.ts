@@ -1,13 +1,13 @@
-import { Category, Orders } from "@prisma/client";
+import { Orders } from "@prisma/client";
 
 export type Users = {
   id?: string;
   email: string;
   name: string;
   image: string;
-  provider: string;
   token?: string;
   orders?: Orders[];
+  addressId: string | null;
 };
 
 export type filterOptions = {
@@ -33,14 +33,13 @@ export type ProductVarients = {
   varientValue: string;
 };
 
-export type createProductArgs = {
-  name: string;
-  description: string;
-  price: number;
-  numberInStock: number;
-  images: string[];
-  category: string[];
-  varients: varientArgs[];
+export type updateProductArgs = {
+  name?: string;
+  description?: string;
+  price?: number;
+  numberInStock?: number;
+  images?: string[];
+  category?: string[];
 };
 
 // colors and ingredients are temporary
@@ -53,9 +52,15 @@ export type varientArgs = {
   color?: string;
   ingredient?: string;
 };
+export type updateVarientArgs = {
+  price?: number;
+  numberInStock?: number;
+  images?: string[];
+  color?: string;
+  ingredient?: string;
+};
 
-export type OrderProducts = {
-  productId: string;
+export type OrderArgs = {
   varientId: string;
   quantity: number;
 };
@@ -64,4 +69,10 @@ export type createComment = {
   userId: string;
   comment: string;
   productId: string;
+};
+
+export type Address = {
+  id?: string;
+  address: string;
+  mobile: string;
 };

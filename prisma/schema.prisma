@@ -15,13 +15,22 @@ model Users {
   name      String
   email     String    @unique
   image     String
-  provider  String
+  addressId String?   @db.ObjectId
   createdAt DateTime? @default(now())
 }
 
-model UserAddress {
+model Admins {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String    @db.ObjectId
+  name      String
+  email     String    @unique
+  image     String
+  addressId String?   @db.ObjectId
+  createdAt DateTime? @default(now())
+}
+
+model Address {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String    @unique @db.ObjectId
   address   String
   mobile    String
   createdAt DateTime? @default(now())
