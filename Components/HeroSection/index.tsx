@@ -1,13 +1,13 @@
 function HeroSection() {
   return (
-    <div className="min-h-[100vh] bg-red-100/30">
-      <div className="w-full md:text-4xl text-2xl font-[900] tracking-widest">
+    <div className="min-h-[100vh]">
+      <div className="w-full my-5 md:text-4xl text-2xl font-[900] tracking-widest">
         THE ESSENTIALS
       </div>
-      <div className="w-full leading-tight md:text-6xl text-2xl font-[700] tracking-wide">
+      <div className="w-full leading-tight md:text-6xl text-4xl text-[#FCF1BE] font-[700] tracking-wide">
         PURE AND NATURAL
       </div>
-      <div className="w-full leading-tight md:text-6xl text-2xl font-[700] tracking-wide">
+      <div className="w-full leading-tight md:text-5xl text-3xl font-[700] tracking-wide">
         FOR A HEALTHIER YOU
       </div>
       <div className="w-full md:text-md text-sm text-white font-[100] tracking-widest">

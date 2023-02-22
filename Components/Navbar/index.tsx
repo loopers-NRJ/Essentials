@@ -1,4 +1,4 @@
-import Navlink from "./NavLink/index.jsx";
+import Navlink from "./NavLink/index";
 
 function Navbar() {
   return (

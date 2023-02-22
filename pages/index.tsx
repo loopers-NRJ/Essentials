@@ -1,5 +1,5 @@
 import Head from "next/head";
-import HeroSection from "../Components/HeroSection/index.jsx"
+import HeroSection from "../Components/HeroSection/index"
 
 export default function Home() {
   return (

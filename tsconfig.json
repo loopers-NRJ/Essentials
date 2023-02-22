@@ -19,10 +19,10 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "Components/Navbar/index.jsx",
-    "Components/Layout/index.jsx",
-    "pages/index.jsx",
-    "Components/Footer/index.jsx"
+    "Components/Navbar/index.tsx",
+    "Components/Layout/index.tsx",
+    "pages/index.tsx",
+    "Components/Footer/index.tsx"
   ],
   "exclude": ["node_modules"]
 }
