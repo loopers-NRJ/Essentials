@@ -2,9 +2,14 @@ import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
-import { createUser, findUser } from "../../../services/database";
-
-export const authOptions: NextAuthOptions = {
+import { NextApiRequest, NextApiResponse } from "next";
+import { setCookie } from "nookies";
+import jwt from "jsonwebtoken";
+import { createUser, findUserByEmail } from "../../../database/users";
+export const getAuthOptions = (
+  req: NextApiRequest,
+  res: NextApiResponse
+): NextAuthOptions => ({
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -17,28 +22,35 @@ export const authOptions: NextAuthOptions = {
   ],
   secret: process.env.JWT_SECRET,
   callbacks: {
-    signIn: async ({ user }) => {
+    signIn: async ({ user }: any) => {
       if (!user.email || !user.name || !user.image)
         return Promise.reject("Credentials not found");
-      let savedUser = await findUser(user.email);
+      let savedUser: any = await findUserByEmail(user.email);
       if (!savedUser) {
         savedUser = await createUser({
           email: user.email,
           name: user.name,
           image: user.image,
-          orders: [],
+          provider: user.provider || "facebook",
         });
+        if (savedUser instanceof Error)
+          return Promise.reject(savedUser.message);
       }
-      return Promise.resolve(true);
-    },
-    session: async ({ session }: { session: any }) => {
-      if (session.user?.email) {
-        const user = await findUser(session.user?.email);
-        session.user.orders = user?.orders;
-        session.user.id = user?.id;
-      }
-      return session;
+      const token = jwt.sign(
+        { id: savedUser.id },
+        process.env.JWT_SECRET as string,
+        {
+          expiresIn: "30d",
+        }
+      );
+      setCookie({ res }, "auth-token", token, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: "/",
+      });
+      return true;
     },
   },
-};
-export default NextAuth(authOptions);
+});
+
+export default (req: NextApiRequest, res: NextApiResponse) =>
+  NextAuth(getAuthOptions(req, res))(req, res);
