@@ -33,3 +33,11 @@ export async function findAdmin(id: string) {
     },
   });
 }
+
+const Admin = {
+  findAdmin,
+  removeAdmin,
+  getAdmins,
+  createAdmin,
+};
+export default Admin;

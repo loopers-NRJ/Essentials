@@ -103,3 +103,11 @@ export async function cancelOrders({
 
   return canceledOrder;
 }
+
+const Order = {
+  getOrdersByUserId,
+  placeOrder,
+  cancelOrders,
+};
+
+export default Order;

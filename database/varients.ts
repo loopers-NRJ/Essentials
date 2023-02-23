@@ -1,4 +1,6 @@
 import getInstance from "./prismaClient";
+import { updateVarientArgs } from "../types";
+import { updateVarientValidator } from "./validators";
 
 export async function getVarientById(id: string) {
   return await getInstance().productVarients.findUnique({
@@ -24,27 +26,22 @@ export async function deleteVarient(id: string) {
   });
 }
 
-export async function updatePrice(varientId: string, price: number) {
+export async function updateVarient(id: string, data: updateVarientArgs) {
+  const { error } = updateVarientValidator.validate(data);
+  if (error) return new Error(error.message);
   return await getInstance().productVarients.update({
     where: {
-      id: varientId,
+      id,
     },
-    data: {
-      price,
-    },
+    data,
   });
 }
 
-export async function updateNoInStock(
-  varientId: string,
-  numberInStock: number
-) {
-  return await getInstance().productVarients.update({
-    where: {
-      id: varientId,
-    },
-    data: {
-      numberInStock,
-    },
-  });
-}
+const Varients = {
+  getVarientById,
+  getVarientByProductId,
+  deleteVarient,
+  updateVarient,
+};
+
+export default Varients;

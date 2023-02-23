@@ -5,30 +5,19 @@ import { createCategory, getAllCategory } from "../../../database/category";
 const handler = nc<NextApiRequest, NextApiResponse>({
   onError: (err, req, res) => {
     console.log(err);
-    res.status(500).json({ message: err });
+    {
+      console.log(err);
+      res.status(500).json({ message: err });
+    }
   },
   onNoMatch: (req, res) =>
     res.status(405).json({ message: "Method not allowed" }),
 });
 
-// method: GET
-// path: /api/category
-// Input: { }
-// Output: { id: string; value: string; }[]
-// Error: { message: string }
-// description: Get all category
-
 handler.get(async (req, res) => {
   const category = await getAllCategory();
   return res.status(200).json(category);
 });
-
-// method: POST
-// path: /api/category
-// Input: { category: string }
-// Output: { id: string; value: string; }
-// Error: { message: string }
-// description: Create a new category
 
 handler.post(async (req, res) => {
   const value = req.body.category as string;

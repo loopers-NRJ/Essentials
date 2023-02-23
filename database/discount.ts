@@ -86,3 +86,13 @@ export async function deleteDiscount(varientId: string) {
     },
   });
 }
+
+const Discount = {
+  getDiscountById,
+  getDiscountByVarientId,
+  addDiscount,
+  updateDiscount,
+  deleteDiscount,
+};
+
+export default Discount;

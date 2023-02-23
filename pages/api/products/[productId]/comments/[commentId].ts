@@ -3,20 +3,17 @@ import nextConnect from "next-connect";
 import {
   deleteComment,
   getCommentById,
+  updateComment,
 } from "../../../../../database/comments";
 
 const handler = nextConnect<NextApiRequest, NextApiResponse>({
-  onError: (err, req, res) => res.status(500).json({ message: err }),
+  onError: (err, req, res) => {
+    console.log(err);
+    res.status(500).json({ message: err });
+  },
   onNoMatch: (req, res) =>
     res.status(405).json({ message: "Method not allowed" }),
 });
-
-// method: GET
-// path: /api/products/:productId/comments/commentId
-// Input: {  }
-// Output: { comments: { id: string; userId: string; comment: string; productId: string }[]; total: number; }
-// Error: { message: string }
-// description: Get comments by comment id
 
 handler.get(async (req, res) => {
   const id = req.query.commentId as string;
@@ -25,20 +22,23 @@ handler.get(async (req, res) => {
   return res.status(200).json(comment);
 });
 
-// method: DELETE
-// path: /api/products/:productId/comments
-// Input: { commentId: string; userId: string }
-// Output: { id: string; userId: string; comment: string; productId: string }
-// Error: { message: string }
-// description: Delete a comment by comment id
-
 handler.delete(async (req, res) => {
   const id = req.query.commentId as string;
-  const userId = req.body.userId as string;
+  const userId = req.user.id as string;
   const comment = await deleteComment(id, userId);
   if (comment instanceof Error)
     return res.status(400).json({ message: comment.message });
   return res.status(200).json(comment);
+});
+
+handler.put(async (req, res) => {
+  const id = req.query.commentId as string;
+  const userId = req.user.id as string;
+  const { comment } = req.body;
+  const updatedComment = await updateComment(id, userId, comment);
+  if (updatedComment instanceof Error)
+    return res.status(400).json({ message: updatedComment.message });
+  return res.status(200).json(updatedComment);
 });
 
 export default handler;

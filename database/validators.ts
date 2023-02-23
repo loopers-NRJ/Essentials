@@ -1,9 +1,9 @@
 import joi from "joi";
-export const addressValidatorCreate = joi.object({
+export const createAddressValidator = joi.object({
   address: joi.string().min(10).max(255).required().label("Address"),
   mobile: joi.string().min(10).max(10).required().label("Mobile Number"),
 });
-export const addressValidatorUpdate = joi.object({
+export const updateAddressValidator = joi.object({
   address: joi.string().min(10).max(255).label("Address"),
   mobile: joi.string().min(10).max(10).label("Mobile Number"),
 });
@@ -71,3 +71,20 @@ export const updateDiscountValidator = joi.object({
   description: joi.string().label("Description"),
   discount_percent: joi.number().min(0).max(100).label("Discount"),
 });
+
+const Validator = {
+  createAddressValidator,
+  updateAddressValidator,
+  categoryValidator,
+  commentValidator,
+  ordersValidator,
+  createProductValidator,
+  updateProductValidator,
+  createUserValidator,
+  updateUserValidator,
+  updateVarientValidator,
+  createDiscountValidator,
+  updateDiscountValidator,
+};
+
+export default Validator;

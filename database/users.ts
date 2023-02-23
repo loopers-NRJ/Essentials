@@ -24,3 +24,11 @@ export async function createUser(user: Users) {
     },
   });
 }
+
+const User = {
+  findUser,
+  findUserByEmail,
+  createUser,
+};
+
+export default User;

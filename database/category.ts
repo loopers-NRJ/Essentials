@@ -33,3 +33,12 @@ export async function updateCategory(id: string, value: string) {
     },
   });
 }
+
+const Category = {
+  getAllCategory,
+  getCategoryById,
+  createCategory,
+  updateCategory,
+};
+
+export default Category;

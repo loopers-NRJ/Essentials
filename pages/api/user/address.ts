@@ -1,7 +1,8 @@
 import nc from "next-connect";
 import { NextApiRequest, NextApiResponse } from "next";
 import auth from "../../../middlewares/auth";
-import updateAddress, {
+import {
+  updateAddress,
   createAddress,
   findAddressByUserId,
 } from "../../../database/address";

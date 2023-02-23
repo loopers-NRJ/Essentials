@@ -1,20 +1,21 @@
-import { getCategoryById } from "./category";
-import { sortOptions, filterOptions, createProductArgs } from "../types";
 import getInstance from "./prismaClient";
+import { getCategoryById } from "./category";
+import { filterOptions, updateProductArgs } from "../types";
+import { createProductValidator, updateProductValidator } from "./validators";
 
 export async function getProducts({
   query = "",
   limit = 30,
   page = 1,
-  sort = sortOptions.NAME_ASC,
+  sort = "name_asc",
   filter = "",
 }: filterOptions) {
   const getOrderBy = (): any => {
-    if (sort === sortOptions.NAME_ASC) {
+    if (sort === "name_asc") {
       return { name: "asc" };
-    } else if (sort === sortOptions.NAME_DESC) {
+    } else if (sort === "name_desc") {
       return { name: "desc" };
-    } else if (sort === sortOptions.PRICE_ASC) {
+    } else if (sort === "price_asc") {
       return { price: "asc" };
     } else {
       return { price: "desc" };
@@ -36,32 +37,17 @@ export async function getProducts({
   });
 }
 
-export async function createProduct({
-  name,
-  description,
-  price,
-  numberInStock,
-  images,
-  category,
-  varients,
-}: createProductArgs) {
+export async function createProduct({ varients, ...data }: any) {
+  const { error } = createProductValidator.validate(data);
+  if (error) return new Error(error.message);
   const product = await getInstance().$transaction(async (prisma) => {
     const categories = [];
-    for (const c of category) {
+    for (const c of data.category) {
       const cat = await getCategoryById(c);
       if (!cat) return new Error("Category not found");
       categories.push(cat);
     }
-    const product = await prisma.products.create({
-      data: {
-        name,
-        description,
-        price,
-        numberInStock,
-        images,
-        category,
-      },
-    });
+    const product = await prisma.products.create({ data });
     for (const v of varients) {
       v.productId = product.id;
       if (!v.price) v.price = product.price;
@@ -90,3 +76,23 @@ export async function getProductById(id: string) {
     },
   });
 }
+
+export async function updateProduct(id: string, data: updateProductArgs) {
+  const { error } = updateProductValidator.validate(data);
+  if (error) return new Error(error.message);
+  return await getInstance().products.update({
+    where: {
+      id,
+    },
+    data,
+  });
+}
+
+const Product = {
+  getProductById,
+  getProducts,
+  createProduct,
+  updateProduct,
+};
+
+export default Product;
