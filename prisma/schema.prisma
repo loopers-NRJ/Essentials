@@ -62,14 +62,16 @@ model ProductVarients {
   images        String[]
   price         Float
   numberInStock Int
+  discountId    String?   @db.ObjectId
   color         String?
-  ingredient    String?
+  quantity      String?
   createdAt     DateTime? @default(now())
 }
 
-model Discount {
+model Discounts {
   id               String    @id @default(auto()) @map("_id") @db.ObjectId
   name             String
+  varientId        String    @unique @db.ObjectId
   description      String?
   discount_percent Float
   active           Boolean

@@ -1,17 +1,10 @@
 import joi from "joi";
 export const addressValidatorCreate = joi.object({
-  addressLine1: joi
-    .string()
-    .min(10)
-    .max(255)
-    .required()
-    .label("Address Line 1"),
-  addressLine2: joi.string().min(10).max(255).label("Address Line 2"),
+  address: joi.string().min(10).max(255).required().label("Address"),
   mobile: joi.string().min(10).max(10).required().label("Mobile Number"),
 });
 export const addressValidatorUpdate = joi.object({
-  addressLine1: joi.string().min(10).max(255).label("Address Line 1"),
-  addressLine2: joi.string().min(10).max(255).label("Address Line 2"),
+  address: joi.string().min(10).max(255).label("Address"),
   mobile: joi.string().min(10).max(10).label("Mobile Number"),
 });
 
@@ -66,7 +59,7 @@ export const createVarientValidator = joi.object({
   numberInStock: joi.number().required().min(0).label("Number in stock"),
   images: joi.array().items(joi.string()).required().min(1).label("Images"),
   color: joi.string().min(3).max(20).label("Color"),
-  ingredients: joi.string().min(3).max(20).label("Ingredients"),
+  quantity: joi.string().min(3).max(20).label("Quantity"),
 });
 
 export const updateVarientValidator = joi.object({
@@ -75,5 +68,16 @@ export const updateVarientValidator = joi.object({
   numberInStock: joi.number().min(0).label("Number in stock"),
   images: joi.array().items(joi.string()).min(1).label("Images"),
   color: joi.string().min(3).max(20).label("Color"),
-  ingredients: joi.string().min(3).max(20).label("Ingredients"),
+  quantity: joi.string().min(3).max(20).label("Quantity"),
+});
+
+export const createDiscountValidator = joi.object({
+  name: joi.string().required().label("Name"),
+  description: joi.string().label("Description"),
+  discount_percent: joi.number().required().min(0).max(100).label("Discount"),
+});
+export const updateDiscountValidator = joi.object({
+  name: joi.string().label("Name"),
+  description: joi.string().label("Description"),
+  discount_percent: joi.number().min(0).max(100).label("Discount"),
 });
