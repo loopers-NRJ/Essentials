@@ -53,17 +53,7 @@ export const updateUserValidator = joi.object({
   provider: joi.string().label("Provider"),
 });
 
-export const createVarientValidator = joi.object({
-  varientId: joi.string().required(),
-  price: joi.number().required().min(0).label("Price"),
-  numberInStock: joi.number().required().min(0).label("Number in stock"),
-  images: joi.array().items(joi.string()).required().min(1).label("Images"),
-  color: joi.string().min(3).max(20).label("Color"),
-  quantity: joi.string().min(3).max(20).label("Quantity"),
-});
-
 export const updateVarientValidator = joi.object({
-  varientId: joi.string().required(),
   price: joi.number().min(0).label("Price"),
   numberInStock: joi.number().min(0).label("Number in stock"),
   images: joi.array().items(joi.string()).min(1).label("Images"),

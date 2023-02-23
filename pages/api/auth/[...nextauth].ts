@@ -31,7 +31,7 @@ export const getAuthOptions = (
           email: user.email,
           name: user.name,
           image: user.image,
-          provider: user.provider || "facebook",
+          addressId: null,
         });
         if (savedUser instanceof Error)
           return Promise.reject(savedUser.message);
