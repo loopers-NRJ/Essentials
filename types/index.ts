@@ -1,4 +1,5 @@
 import { Orders } from "@prisma/client";
+import { number } from "joi";
 
 export type Users = {
   id?: string;
@@ -13,24 +14,9 @@ export type Users = {
 export type filterOptions = {
   limit?: number;
   page?: number;
-  sort?: sortOptions;
+  sort?: string;
   query?: string;
   filter?: string;
-};
-export enum sortOptions {
-  NAME_ASC,
-  NAME_DESC,
-  PRICE_ASC,
-  PRICE_DESC,
-}
-
-export type ProductVarients = {
-  id?: string;
-  images: string[];
-  price: number;
-  numberInStock: number;
-  varientType: string;
-  varientValue: string;
 };
 
 export type updateProductArgs = {
@@ -50,14 +36,14 @@ export type varientArgs = {
   numberInStock: number;
   images?: string[];
   color?: string;
-  ingredient?: string;
+  quantity?: string;
 };
 export type updateVarientArgs = {
   price?: number;
   numberInStock?: number;
   images?: string[];
   color?: string;
-  ingredient?: string;
+  quantity?: string;
 };
 
 export type OrderArgs = {
@@ -75,4 +61,15 @@ export type Address = {
   id?: string;
   address: string;
   mobile: string;
+};
+
+export type DiscountsProps = {
+  name: string;
+  description?: string;
+  discount_percent: number;
+};
+export type DiscountsUpdateProps = {
+  name?: string;
+  description?: string;
+  discount_percent?: number;
 };
