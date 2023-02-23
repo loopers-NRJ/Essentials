@@ -8,10 +8,12 @@ function StorySection() {
     index === active ? "opacity-100" : "opacity-40";
   const handleClick = (index: number) => {
     ref[index - 1].current?.scrollIntoView({
-      behavior: "smooth",
+      // behavior: "smooth",
       block: "center",
       inline: "center",
     });
+    console.log(ref[index - 1].current?.scrollIntoView);
+
     setActive(index);
   };
 
@@ -19,9 +21,9 @@ function StorySection() {
   [0, 1, 2].forEach((i) => ref.push(useRef<HTMLDivElement>(null)));
 
   return (
-    <div className="h-screen flex justify-center items-center bg-[#CBBB6C]">
+    <div className="h-screen flex justify-center items-center">
       <div className="w-[90%] h-[90%] rounded-2xl bg-white">
-        <div className="h-[90%] overflow-scroll flex items-center gap-4 px-6 no-scrollbar">
+        <div className="h-[90%] overflow-hidden flex items-center gap-4 px-6 no-scrollbar scroll-smooth">
           {data.map((d) => (
             <StoryCard
               {...d}
