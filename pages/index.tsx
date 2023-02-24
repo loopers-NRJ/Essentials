@@ -1,5 +1,6 @@
 import Head from "next/head";
 import HeroSection from "../Components/HeroSection/index"
+import ProductSection from "../Components/ProductSection/index";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
       </Head>
       <main className="font-[700] text-4xl">
         <HeroSection/>
+        <ProductSection />
       </main>
     </>
   );
