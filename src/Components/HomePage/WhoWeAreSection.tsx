@@ -4,26 +4,25 @@ import StoryCard from "./StoryCard";
 
 function StorySection() {
   const [active, setActive] = useState(1);
+  const ref: RefObject<HTMLDivElement>[] = [];
+  ref.push(useRef<HTMLDivElement>(null));
+  ref.push(useRef<HTMLDivElement>(null));
+  ref.push(useRef<HTMLDivElement>(null));
+
   const getClass = (index: number) =>
     index === active ? "opacity-100" : "opacity-40";
+
   const handleClick = (index: number) => {
     ref[index - 1].current?.scrollIntoView({
-      // behavior: "smooth",
       block: "center",
       inline: "center",
     });
-    console.log(ref[index - 1].current?.scrollIntoView);
-
     setActive(index);
   };
-
-  const ref: RefObject<HTMLDivElement>[] = [];
-  [0, 1, 2].forEach((i) => ref.push(useRef<HTMLDivElement>(null)));
-
   return (
-    <div className="h-screen flex justify-center items-center">
-      <div className="w-[90%] h-[90%] rounded-2xl bg-white">
-        <div className="h-[90%] overflow-hidden flex items-center gap-4 px-6 no-scrollbar scroll-smooth">
+    <div className="h-screen w-full flex justify-center items-center">
+      <div className="w-[100%] h-[90%] rounded-2xl bg-white">
+        <div className="h-[90%] overflow-hidden flex items-center gap-4 px-6 no-scrollbar scroll-smooth transition-all">
           {data.map((d) => (
             <StoryCard
               {...d}
@@ -35,33 +34,18 @@ function StorySection() {
           ))}
         </div>
         <div className="flex gap-4 px-24">
-          <button
-            className={
-              "border-b-2 border-black flex-grow flex justify-center " +
-              getClass(1)
-            }
-            onClick={() => handleClick(1)}
-          >
-            STORY 1
-          </button>
-          <button
-            className={
-              "border-b-2 border-black flex-grow flex justify-center " +
-              getClass(2)
-            }
-            onClick={() => handleClick(2)}
-          >
-            STORY 2
-          </button>
-          <button
-            className={
-              "border-b-2 border-black flex-grow flex justify-center " +
-              getClass(3)
-            }
-            onClick={() => handleClick(3)}
-          >
-            STORY 3
-          </button>
+          {data.map((d, index) => (
+            <div
+              key={d.index}
+              className={
+                "border-b-2 cursor-pointer border-black flex-grow flex justify-center " +
+                getClass(index + 1)
+              }
+              onClick={() => handleClick(index + 1)}
+            >
+              {d.nav}
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -74,31 +58,37 @@ const data = [
   {
     index: 1,
     title: "title of the story",
+    nav: "STORY 1",
     desc: `Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint
     mollitia nesciunt rem commodi accusantium optio molestias corporis
     aperiam nam quam, repellendus, tempore ipsa atque ex hic amet
 praesentium, itaque ducimus.`,
     color: "#EEE8D1",
-    image: "images/1676718882179_product 1.jpg",
+    image:
+      "https://w0.peakpx.com/wallpaper/642/316/HD-wallpaper-mikasa-anime-attack-on-titan-shingeki-no-kyojin-snk.jpg",
   },
   {
     index: 2,
     title: "title of the story",
+    nav: "STORY 2",
     desc: `Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint
     mollitia nesciunt rem commodi accusantium optio molestias corporis
     aperiam nam quam, repellendus, tempore ipsa atque ex hic amet
 praesentium, itaque ducimus.`,
     color: "#E8EBEF",
-    image: "images/1676719085668_product 2.webp",
+    image:
+      "https://w0.peakpx.com/wallpaper/642/316/HD-wallpaper-mikasa-anime-attack-on-titan-shingeki-no-kyojin-snk.jpg",
   },
   {
     index: 3,
     title: "title of the story",
+    nav: "STORY 3",
     desc: `Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint
     mollitia nesciunt rem commodi accusantium optio molestias corporis
     aperiam nam quam, repellendus, tempore ipsa atque ex hic amet
 praesentium, itaque ducimus.`,
     color: "#FFE1CC",
-    image: "images/1676718882179_product 1.jpg",
+    image:
+      "https://w0.peakpx.com/wallpaper/642/316/HD-wallpaper-mikasa-anime-attack-on-titan-shingeki-no-kyojin-snk.jpg",
   },
 ];

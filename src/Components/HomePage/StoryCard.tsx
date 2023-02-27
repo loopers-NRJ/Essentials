@@ -16,12 +16,12 @@ function StoryCard({
   color: string;
   image: string;
   active: boolean;
-  reference?: any;
+  reference?: React.RefObject<HTMLDivElement>;
   onClick: Function;
 }) {
   return (
     <div
-      className={`w-[50vw] h-96 rounded-2xl overflow-hidden flex gap-1 flex-shrink-0 ${
+      className={`w-[50vw] h-96 rounded-2xl overflow-hidden flex gap-1 flex-shrink-0 transition-all ${
         active ? "opacity-100" : "opacity-40"
       }`}
       ref={reference}

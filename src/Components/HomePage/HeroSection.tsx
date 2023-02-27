@@ -16,7 +16,9 @@ function HeroSection() {
         curated selection of organic and chemical-free products for a healthier
         you and a cleaner planet
       </div>
-      <div className="flex w-fit rounded-[10px] text-[1rem] font-medium text-white my-5 px-10 py-1 bg-[#413809]">SHOP NOW</div>
+      <div className="flex w-fit rounded-[10px] text-[1rem] font-medium text-white my-5 px-10 py-1 bg-[#413809]">
+        SHOP NOW
+      </div>
     </section>
   );
 }

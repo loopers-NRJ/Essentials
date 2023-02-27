@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import Layout from "../Components/Layout";
+import Layout from "../src/Components/Common/Layout";
 import { Montserrat } from "@next/font/google";
 
 const font = Montserrat({

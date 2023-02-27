@@ -1,6 +1,7 @@
 import Head from "next/head";
-import HeroSection from "../Components/HeroSection/index"
-import ProductSection from "../Components/ProductSection/index";
+import HeroSection from "../src/Components/HomePage/HeroSection";
+import BestSellingSection from "../src/Components/HomePage/BestSellingSection";
+import WhoWeAreSection from "../src/Components/HomePage/WhoWeAreSection";
 
 export default function Home() {
   return (
@@ -10,9 +11,10 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="font-[700] text-4xl">
-        <HeroSection/>
-        <ProductSection />
+      <main>
+        <HeroSection />
+        <BestSellingSection />
+        <WhoWeAreSection />
       </main>
     </>
   );
