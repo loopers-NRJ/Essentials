@@ -1,7 +1,9 @@
 import Head from "next/head";
+import CustomerReviewSection from "../src/Components/HomePage/CustomerReviewSection";
+import WhoWeAreSection from "../src/Components/HomePage/WhoWeAreSection";
+import CustomizeSection from "../src/Components/HomePage/CustomizeSection";
 import HeroSection from "../src/Components/HomePage/HeroSection";
 import BestSellingSection from "../src/Components/HomePage/BestSellingSection";
-import WhoWeAreSection from "../src/Components/HomePage/WhoWeAreSection";
 
 export default function Home() {
   return (
@@ -14,7 +16,9 @@ export default function Home() {
       <main>
         <HeroSection />
         <BestSellingSection />
+        <CustomizeSection />
         <WhoWeAreSection />
+        <CustomerReviewSection />
       </main>
     </>
   );
