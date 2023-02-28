@@ -31,7 +31,7 @@ function StoryCard({
         <img
           src={image}
           className={`w-[100%] h-[100%] transition-all ${
-            active ? "scale-100" : "scale-125"
+            active ? "scale-100" : "scale-105"
           }`}
         />
       </div>

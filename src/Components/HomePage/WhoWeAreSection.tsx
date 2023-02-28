@@ -21,8 +21,13 @@ function StorySection() {
   };
   return (
     <div className="h-screen w-full flex justify-center items-center">
-      <div className="w-[100%] h-[90%] rounded-2xl bg-white">
-        <div className="h-[90%] overflow-hidden flex items-center gap-4 px-6 no-scrollbar scroll-smooth transition-all">
+      <div className="flex flex-col gap-8  w-[100%] h-[80%] rounded-2xl bg-[#F7F9F2] text-center ">
+        
+        <h1 className="text-4xl leading-normal   font-bold whitespace-nowrap ">
+              WHO WE ARE
+            </h1>
+        
+        <div className=" overflow-hidden flex items-center gap-4 px-6 no-scrollbar scroll-smooth transition-all">
           {data.map((d) => (
             <StoryCard
               {...d}

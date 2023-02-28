@@ -38,8 +38,8 @@ function BestSellingSection() {
     return filtered;
   };
   return (
-    <section className="w-full h-[90vh]">
-      <div className="w-full h-4/5 flex flex-col bg-[#F7F9F2] rounded-2xl overflow-hidden">
+    <section className="w-full ">
+      <div className="w-full h-4/5 flex flex-col bg-[#F7F9F2] rounded-2xl overflow-hidden pb-5">
         <div className="flex my-2">
           <h1 className="text-[#6D5C00] whitespace-nowrap font-semibold text-xl tracking-wide p-4 mx-8 flex justify-center items-center">
             BESTSELLING PRODUCTS
