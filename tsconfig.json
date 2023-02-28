@@ -15,14 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "Components/common/Navbar.tsx",
-    "Components/Common/Layout.tsx",
-    "pages/index.tsx",
-    "Components/Footer/Footer.tsx"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/index.tsx"],
   "exclude": ["node_modules"]
 }
