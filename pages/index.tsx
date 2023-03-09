@@ -19,6 +19,13 @@ export default function Home() {
         <CustomizeSection />
         <WhoWeAreSection />
         <CustomerReviewSection />
+        
+        
+
+      
+        
+
+
       </main>
     </>
   );
