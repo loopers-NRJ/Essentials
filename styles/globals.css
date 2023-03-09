@@ -1,3 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  background-color: #F7F9F2;
+}
+h1 {
+  color: #6d5c00;
+  font-style: "Monsterrat" sans-serif;
+}
+.wrp::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.container{
+  perspective:1000px;
+}
+.container:hover > .card {
+  cursor: pointer;
+  transform: rotateY(360deg);
+  
+}
+.card {
+  transition: transform 1000ms;
+  transform-style: preserve-3d;
+
+  animation-duration: 3s;
+  animation-name: rotate;
+}
+.animate {
+  transform: rotateY(180deg);
+}
+
+.front,
+.back {
+  backface-visibility: hidden;
+}
+
+.front {
+  background-image: url("/cust.jpg");
+  background-position:center;
+  transform: rotateY(180deg);
+  backgroud-size:cover;
+}
+.masonrypic {
+  background-image: url("/cust.jpg");
+}
+.custname {
+  color: #6d5c00;
+}
