@@ -20,14 +20,14 @@ function StorySection() {
     setActive(index);
   };
   return (
-    <div className="h-screen w-full flex justify-center items-center">
-      <div className="flex flex-col gap-8  w-[100%] h-[80%] rounded-2xl bg-[#F7F9F2] text-center ">
+    <div className="h-[82vh] w-full flex justify-center items-center mt-20">
+      <div className="flex flex-col gap-8  w-[100%] h-[100%] rounded-2xl bg-[#F7F9F2] text-center pt-10">
         
         <h1 className="text-4xl leading-normal   font-bold whitespace-nowrap ">
               WHO WE ARE
             </h1>
         
-        <div className=" overflow-hidden flex items-center gap-4 px-6 no-scrollbar scroll-smooth transition-all">
+        <div className=" overflow-hidden flex items-center  px-6 no-scrollbar scroll-smooth transition-all">
           {data.map((d) => (
             <StoryCard
               {...d}

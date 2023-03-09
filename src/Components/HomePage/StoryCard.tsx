@@ -21,7 +21,7 @@ function StoryCard({
 }) {
   return (
     <div
-      className={`w-[50vw] h-96 rounded-2xl overflow-hidden flex gap-1 flex-shrink-0 transition-all ${
+      className={`w-[50vw] h-[50vh] rounded-2xl overflow-hidden flex gap-1 flex-shrink-0 transition-all scale ${
         active ? "opacity-100" : "opacity-40"
       }`}
       ref={reference}
