@@ -1,7 +1,10 @@
 import getInstance from "./prismaClient";
+import { idValidator } from "./validators";
 
 export async function createAdmin(id: string) {
   if (!id) return new Error("Admin Id required");
+  const { error: idError } = idValidator.validate(id);
+  if (idError) return new Error(idError.message);
   const user = await getInstance().users.findUnique({
     where: {
       id,
@@ -18,6 +21,8 @@ export async function getAdmins() {
 }
 
 export async function removeAdmin(id: string) {
+  const { error: idError } = idValidator.validate(id);
+  if (idError) return new Error(idError.message);
   if (!id) return new Error("Admin Id required");
   return await getInstance().admins.delete({
     where: {
@@ -27,6 +32,8 @@ export async function removeAdmin(id: string) {
 }
 
 export async function findAdmin(id: string) {
+  const { error: idError } = idValidator.validate(id);
+  if (idError) return new Error(idError.message);
   return await getInstance().admins.findUnique({
     where: {
       id,

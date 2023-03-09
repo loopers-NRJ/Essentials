@@ -1,5 +1,6 @@
 import getInstance from "./prismaClient";
 import { Users } from "../types";
+import { idValidator } from "./validators";
 export async function findUserByEmail(email: string) {
   return await getInstance().users.findUnique({
     where: {
@@ -8,6 +9,8 @@ export async function findUserByEmail(email: string) {
   });
 }
 export async function findUser(id: string) {
+  const { error } = idValidator.validate(id);
+  if (error) return new Error(error.message);
   return await getInstance().users.findUnique({
     where: {
       id,

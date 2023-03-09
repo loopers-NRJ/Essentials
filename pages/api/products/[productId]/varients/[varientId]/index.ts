@@ -29,12 +29,16 @@ const upload = multer({
 handler.get(async (req, res) => {
   const id = req.query.varientId as string;
   const varient = await getVarientById(id);
+  if (varient instanceof Error)
+    return res.status(400).json({ message: varient.message });
   res.status(200).json(varient);
 });
 
 handler.delete(admin, async (req, res) => {
   const id = req.query.varientId as string;
   const varient = await deleteVarient(id);
+  if (varient instanceof Error)
+    return res.status(400).json({ message: varient.message });
   res.status(200).json(varient);
 });
 

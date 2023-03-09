@@ -14,6 +14,8 @@ const handler = nextConnect<NextApiRequest, NextApiResponse>({
 handler.get(async (req, res) => {
   const id = req.query.categoryId as string;
   const category = await getCategoryById(id);
+  if (category instanceof Error)
+    return res.status(400).json({ message: category.message });
   return res.status(200).json(category);
 });
 

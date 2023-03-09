@@ -1,8 +1,14 @@
 import { Address } from "../types";
 import getInstance from "./prismaClient";
-import { createAddressValidator, updateAddressValidator } from "./validators";
+import {
+  createAddressValidator,
+  idValidator,
+  updateAddressValidator,
+} from "./validators";
 
 export async function findAddressByUserId(userId: string) {
+  const { error } = idValidator.validate(userId);
+  if (error) return new Error(error.message);
   return await getInstance().address.findUnique({
     where: {
       userId,
@@ -11,6 +17,8 @@ export async function findAddressByUserId(userId: string) {
 }
 
 export async function createAddress(userId: string, address: Address) {
+  const { error: idError } = idValidator.validate(userId);
+  if (idError) return new Error(idError.message);
   const { error } = createAddressValidator.validate(address);
   if (error) return new Error(error.message);
   const add = await getInstance().address.create({
@@ -30,6 +38,8 @@ export async function createAddress(userId: string, address: Address) {
 }
 
 export async function updateAddress(id: string, address: Address) {
+  const { error: idError } = idValidator.validate(id);
+  if (idError) return new Error(idError.message);
   const { error } = updateAddressValidator.validate(address);
   if (error) return new Error(error.message);
   return await getInstance().address.update({

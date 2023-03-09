@@ -23,6 +23,8 @@ handler.get(async (req, res) => {
     limit,
     page,
   });
+  if (comment instanceof Error)
+    return res.status(400).json({ message: comment.message });
   res.status(200).json(comment);
 });
 

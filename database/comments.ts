@@ -1,11 +1,15 @@
 import getInstance from "./prismaClient";
 import { createComment } from "../types";
-import { commentValidator } from "./validators";
+import { commentValidator, idValidator } from "./validators";
 export async function createComment({
   userId,
   comment,
   productId,
 }: createComment) {
+  const { error: userIdError } = idValidator.validate(userId);
+  if (userIdError) return new Error(userIdError.message);
+  const { error: productIdError } = idValidator.validate(productId);
+  if (productIdError) return new Error(productIdError.message);
   const { error } = commentValidator.validate({ comment });
   if (error) return new Error(error.message);
   const product = await getInstance().products.findUnique({
@@ -28,6 +32,10 @@ export async function updateComment(
   userId: string,
   comment: string
 ) {
+  const { error: userIdError } = idValidator.validate(userId);
+  if (userIdError) return new Error(userIdError.message);
+  const { error: commentIdError } = idValidator.validate(commentId);
+  if (commentIdError) return new Error(commentIdError.message);
   const { error } = commentValidator.validate({ comment });
   if (error) return new Error(error.message);
   let c = await getInstance().comments.findUnique({
@@ -48,6 +56,10 @@ export async function updateComment(
 }
 
 export async function deleteComment(commentId: string, userId: string) {
+  const { error: userIdError } = idValidator.validate(userId);
+  if (userIdError) return new Error(userIdError.message);
+  const { error: commentIdError } = idValidator.validate(commentId);
+  if (commentIdError) return new Error(commentIdError.message);
   let comment = await getInstance().comments.findUnique({
     where: {
       id: commentId,
@@ -66,6 +78,8 @@ export async function getCommentsByProductId(
   id: string,
   { page = 1, limit = 30 }: { page?: number; limit?: number }
 ) {
+  const { error } = idValidator.validate(id);
+  if (error) return new Error(error.message);
   limit = limit > 30 ? 30 : limit;
   return await getInstance().comments.findMany({
     where: {
@@ -80,6 +94,8 @@ export async function getCommentsByUserId(
   id: string,
   { page = 1, limit = 30 }: { page?: number; limit?: number }
 ) {
+  const { error } = idValidator.validate(id);
+  if (error) return new Error(error.message);
   limit = limit > 30 ? 30 : limit;
   return await getInstance().comments.findMany({
     where: {
@@ -91,6 +107,8 @@ export async function getCommentsByUserId(
 }
 
 export async function getCommentById(id: string) {
+  const { error } = idValidator.validate(id);
+  if (error) return new Error(error.message);
   return await getInstance().comments.findUnique({
     where: {
       id,

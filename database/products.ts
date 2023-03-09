@@ -1,7 +1,11 @@
 import getInstance from "./prismaClient";
 import { getCategoryById } from "./category";
 import { filterOptions, updateProductArgs } from "../types";
-import { createProductValidator, updateProductValidator } from "./validators";
+import {
+  createProductValidator,
+  idValidator,
+  updateProductValidator,
+} from "./validators";
 
 export async function getProducts({
   query = "",
@@ -70,6 +74,8 @@ export async function createProduct({ varients, ...data }: any) {
   return product;
 }
 export async function getProductById(id: string) {
+  const { error } = idValidator.validate(id);
+  if (error) return new Error(error.message);
   return await getInstance().products.findUnique({
     where: {
       id,
@@ -78,6 +84,8 @@ export async function getProductById(id: string) {
 }
 
 export async function updateProduct(id: string, data: updateProductArgs) {
+  const { error: idError } = idValidator.validate(id);
+  if (idError) return new Error(idError.message);
   const { error } = updateProductValidator.validate(data);
   if (error) return new Error(error.message);
   return await getInstance().products.update({

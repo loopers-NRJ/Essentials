@@ -24,6 +24,8 @@ const upload = multer({
 
 handler.get(async (req, res) => {
   const product = await getProductById(req.query.productId as string);
+  if (product instanceof Error)
+    return res.status(400).json({ message: product.message });
   if (!product) return res.status(404).json({ message: "Product not found" });
   res.status(200).json(product);
 });

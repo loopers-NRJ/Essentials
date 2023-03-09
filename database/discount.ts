@@ -1,9 +1,15 @@
 import { DiscountsProps, DiscountsUpdateProps } from "../types";
 import getInstance from "./prismaClient";
-import { createDiscountValidator, updateDiscountValidator } from "./validators";
+import {
+  createDiscountValidator,
+  idValidator,
+  updateDiscountValidator,
+} from "./validators";
 import { getVarientById } from "./varients";
 
 export async function getDiscountById(id: string) {
+  const { error } = idValidator.validate(id);
+  if (error) return new Error(error.message);
   if (!id) return new Error("No id provided");
   return await getInstance().discounts.findUnique({
     where: {
@@ -13,6 +19,8 @@ export async function getDiscountById(id: string) {
 }
 
 export async function getDiscountByVarientId(varientId: string) {
+  const { error } = idValidator.validate(varientId);
+  if (error) return new Error(error.message);
   if (!varientId) return new Error("No id provided");
   return await getInstance().discounts.findUnique({
     where: {
@@ -22,6 +30,8 @@ export async function getDiscountByVarientId(varientId: string) {
 }
 
 export async function addDiscount(varientId: string, discount: DiscountsProps) {
+  const { error: idError } = idValidator.validate(varientId);
+  if (idError) return new Error(idError.message);
   const { error } = createDiscountValidator.validate(discount);
   if (error) return new Error(error.message);
   if (!discount) return new Error("No discount provided");
@@ -54,6 +64,8 @@ export async function updateDiscount(
   discount: DiscountsUpdateProps
 ) {
   if (!varientId) return new Error("No id provided");
+  const { error: idError } = idValidator.validate(varientId);
+  if (idError) return new Error(idError.message);
   const { error } = updateDiscountValidator.validate(discount);
   if (error) return new Error(error.message);
   const d = await getInstance().discounts.update({
@@ -69,7 +81,10 @@ export async function updateDiscount(
 }
 
 export async function deleteDiscount(varientId: string) {
+  const { error } = idValidator.validate(varientId);
+  if (error) return new Error(error.message);
   const varient = await getVarientById(varientId);
+  if (varient instanceof Error) return varient;
   if (!varient) return new Error("No product found");
   if (!varient.discountId) return new Error("No discount found");
   await getInstance().discounts.delete({

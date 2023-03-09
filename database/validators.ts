@@ -72,6 +72,8 @@ export const updateDiscountValidator = joi.object({
   discount_percent: joi.number().min(0).max(100).label("Discount"),
 });
 
+export const idValidator = joi.string().hex().length(24).required();
+
 const Validator = {
   createAddressValidator,
   updateAddressValidator,

@@ -13,6 +13,8 @@ const handler = nextConnect<NextApiRequest, NextApiResponse>({
 
 handler.get(async (req, res) => {
   const products = await getVarientByProductId(req.query.productId as string);
+  if (products instanceof Error)
+    return res.status(400).json({ message: products.message });
   res.status(200).json(products);
 });
 
